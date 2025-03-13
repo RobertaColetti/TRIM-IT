@@ -25,7 +25,7 @@ TRIM-IT is an unsupervised variable selection tool designed to retain overall da
 4-DGE_Analysis:
 * Performs differential gene expression analysis using the edgeR R package.
 * Generates violin plots for differentially expressed genes, providing insights into the distribution and expression levels of selected genes across clusters.
-* Input required: RNAseq-protein_informed-2021WHO.RData and raw-counts-GBM.RData from the Data folder; MOMIP-GBM-results.RData and Kmeans-GBM-results.RData from the Results folder.
+* Input required: RNAseq-protein_informed-2021WHO.RData and rawCounts_GBM.RData from the Data folder; MOMIP-GBM-results.RData and Kmeans-GBM-results.RData from the Results folder.
 
 To reproduce the analysis, please download all the content of this folder and save it into the same location.
 
