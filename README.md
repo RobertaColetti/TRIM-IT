@@ -29,5 +29,3 @@ TRIM-IT is an unsupervised variable selection tool designed to retain overall da
 
 To reproduce the analysis, please download all the content of this folder and save it into the same location.
 
-
-ion
