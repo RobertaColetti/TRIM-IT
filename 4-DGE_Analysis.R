@@ -8,27 +8,16 @@ library(dplyr)
 
 # Data loading and preparing.
 #
-# Load raw data
-GBM_counts <- read_delim("data/raw-count/GBM-counts.csv", 
-                         delim = ";", escape_double = FALSE, trim_ws = TRUE)
-LGG_counts <- read_delim("data/raw-count/LGG-counts.csv", 
-                         delim = ";", escape_double = FALSE, trim_ws = TRUE)
-Glioma_counts = cbind(GBM_counts,LGG_counts) #merge together LGG + GBM
-colnames(Glioma_counts)=substr(colnames(Glioma_counts),1,12) #reduce the patient names to be consistent with the other data
-Glioma_counts=Glioma_counts[,!duplicated(colnames(Glioma_counts))] #remove duplicates
-Glioma_counts$HYBRIDIZATIO=sub("\\|.*", "", Glioma_counts$HYBRIDIZATIO) #remove extra characters from the gene names 
-# Load the reference dataset to filter only patients considered in this study
-load("~/Data/RNAseq-protein_informed-2021WHO.RData")
-samples=rownames(GBM_RNA)
+# Load raw data for the DGE analysis
+load("~/Data/rawCounts_GBM.RData") #here samples are on the columns
 # Load MOMIP results to focus the analysis on the variables of interest
 load("~/Results/MOMIP-GBM-results.RData")
 variables=var_sel.2
+# Load the reference dataset for graphical representation
+load("~/Data/RNAseq-protein_informed-2021WHO.RData")
 
 #Prepare data for the analysis
-rawGBM_data=Glioma_counts[(Glioma_counts$HYBRIDIZATIO %in% variables),]
-rownames(rawGBM_data)=rawGBM_data$HYBRIDIZATIO
-rawGBM_data=rawGBM_data[,which(colnames(rawGBM_data) %in% samples)]
-rawGBM_data=round(rawGBM_data) 
+rawGBM_data=rawGBM_data[which(rownames(rawGBM_data) %in% variables),] #filter only the variables of interest
 rawGBM_data=rawGBM_data[,order(colnames(rawGBM_data))]
 
 # Load clustering results
@@ -63,7 +52,7 @@ qlf.2vs3 <- glmQLFTest(fit, contrast=c(0,-1,1))
 topTags(qlf.2vs3)
 
 #  .......... Construction of Violin Plot  ...........
-# Prepare data for plotting
+# Prepare data for plotting (here normalized transcriptomics data are needed)
 expression_data_norm <- as.data.frame(cbind(gene = colnames(GBM_RNA), t(GBM_RNA))) # For visualizing and comparing the gene expression among clusters, normalized data are preferable
 expression_data_norm=expression_data_norm[,order(colnames(expression_data_norm))]
   sample_info <- as.data.frame(cbind(
