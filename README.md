@@ -1,7 +1,8 @@
 # TRIM-IT
 
 TRIM-IT is an unsupervised variable selection tool designed to retain overall data information for exploratory analysis. In Coletti et al. (doi: …. ), TRIM-IT is applied to GBM transcriptomics data to reduce data dimensionality and stratify patients into reliable clusters. The methodology consists of four sequential steps, each implemented in separate scripts:
- 
+
+
 1-MOMIP-GBM:
 * Applies the Max-Out Min-In Problem (MOMIP) to GBM data for an initial unsupervised variable selection.
 * Results are saved in the MOMIP-GBM-results.RData file, located in the Results folder.
